@@ -63,3 +63,4 @@ __pycache__/
 # Project specific
 .turbo/
 .cache/
+/.venv/

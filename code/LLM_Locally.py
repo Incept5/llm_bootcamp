@@ -21,7 +21,7 @@ tasks = [
     "What is Einstein's most famous equation?",
     "In which country is Krakatoa?",
     "Write a single line in Java to print 'Hello World'",
-    "Write a single line command for Linux to count the number for 20-letter words in the dictionary",
+    "Write a single line command for Linux to count the number of 20-letter words in the dictionary",
     "What is the derivative of 6x^2-5x+12?"
 ]
 
