@@ -11,21 +11,16 @@ ZODIAC_SIGNS = [
     "Sagittarius", "Capricorn", "Aquarius", "Pisces"
 ]
 
-def generate_horoscope(name, star_sign):
+def generate_horoscope(name, star_sign, system_prompt):
     # Get today's date
     today = date.today().strftime('%d-%m-%Y')
-    
-    # AI system prompt
-    system_prompt = """You are an AI astrology assistant called Maude. Provide a short but interesting, positive and
-        optimistic horoscope for tomorrow. Provide the response in Markdown format.
-        Remember, the user is looking for a positive and optimistic outlook on their future."""
 
     # User instruction
     instruction = f"Please provide a horoscope for {name} who's star sign is {star_sign}. Today's date is {today}."
 
     # Call the AI
     response = ollama.chat(
-        model="qwen3", 
+        model="qwen3:4b",
         think=True, 
         stream=False,
         messages=[
@@ -38,12 +33,23 @@ def generate_horoscope(name, star_sign):
     # Return the horoscope
     return response.message.content
 
+# Default system prompt
+DEFAULT_SYSTEM_PROMPT = """You are an AI astrology assistant called Maude. Provide a short but interesting, positive and
+optimistic horoscope for tomorrow. Provide the response in Markdown format.
+Remember, the user is looking for a positive and optimistic outlook on their future."""
+
 # Create the Gradio interface
 interface = gr.Interface(
     fn=generate_horoscope,
     inputs=[
         gr.Textbox(label="Your Name", placeholder="Enter your name"),
-        gr.Dropdown(choices=ZODIAC_SIGNS, label="Star Sign", value="Aries")
+        gr.Dropdown(choices=ZODIAC_SIGNS, label="Star Sign", value="Aries"),
+        gr.Textbox(
+            label="System Prompt", 
+            value=DEFAULT_SYSTEM_PROMPT,
+            lines=4,
+            placeholder="Customize how the AI assistant behaves..."
+        )
     ],
     outputs=gr.Markdown(label="Your Horoscope"),
     title="AI Astrology Assistant",
