@@ -53,9 +53,10 @@ interface = gr.Interface(
 # Launch the interface
 if __name__ == "__main__":
     print("Starting AI Astrology Assistant...")
+    print("Gradio will automatically find an available port...")
     interface.launch(
         inbrowser=True,  # Automatically open browser
         share=False,     # Don't create public link
         server_name="localhost",  # Run on localhost
-        server_port=7860  # Default Gradio port
+        show_api=False   # Don't show API docs
     )
