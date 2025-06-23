@@ -64,3 +64,5 @@ __pycache__/
 .turbo/
 .cache/
 /.venv/
+/embeddings.pkl
+/3d_plot.html
