@@ -12,6 +12,9 @@ ZODIAC_SIGNS = [
 ]
 
 def generate_horoscope(name, star_sign, system_prompt):
+    # Show processing message first
+    yield "🔮 **Processing your horoscope...** ✨\n\nMaude is consulting the stars for your personalized reading. Please wait..."
+    
     # Get today's date
     today = date.today().strftime('%d-%m-%Y')
 
@@ -31,7 +34,7 @@ def generate_horoscope(name, star_sign, system_prompt):
     )
 
     # Return the horoscope
-    return response.message.content
+    yield response.message.content
 
 # Default system prompt
 DEFAULT_SYSTEM_PROMPT = """You are an AI astrology assistant called Maude. Provide a short but interesting, positive and
@@ -53,7 +56,8 @@ interface = gr.Interface(
     ],
     outputs=gr.Markdown(label="Your Horoscope"),
     title="AI Astrology Assistant",
-    description="Enter your name and star sign to get a personalized horoscope!"
+    description="Enter your name and star sign to get a personalized horoscope!",
+    allow_flagging="never"  # Disable the Flag button
 )
 
 # Launch the interface
