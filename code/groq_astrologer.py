@@ -32,7 +32,7 @@ def main():
                 "content": instruction,
             }
         ],
-        model="llama-3.1-70b-versatile",
+        model="llama-3.3-70b-versatile",
     )
     console = Console()
 
