@@ -1,7 +1,7 @@
 
 # Core AI/ML Libraries
 groq>=0.4.1
-ollama>=0.1.7
+ollama>=0.5.1
 transformers>=4.21.0
 sentence-transformers>=2.2.2
 tensorflow>=2.12.0
