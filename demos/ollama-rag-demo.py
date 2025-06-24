@@ -252,13 +252,20 @@ def check_ollama_status() -> bool:
         available_models = [model['name'] for model in response.json().get('models', [])]
         console.print(f"[green]✓ Ollama is running. Available models: {len(available_models)}[/green]")
         
-        # Check if our embedding model is available
-        if EMBEDDING_MODEL not in available_models:
+        # Check if our embedding model is available (handle both with and without :latest tag)
+        model_found = False
+        for model_name in available_models:
+            if model_name == EMBEDDING_MODEL or model_name == f"{EMBEDDING_MODEL}:latest":
+                model_found = True
+                console.print(f"[green]✓ {model_name} is available[/green]")
+                break
+        
+        if not model_found:
             console.print(f"[yellow]Warning: {EMBEDDING_MODEL} not found. You may need to pull it:[/yellow]")
             console.print(f"[yellow]  ollama pull {EMBEDDING_MODEL}[/yellow]")
+            console.print(f"[yellow]Available models: {', '.join(available_models)}[/yellow]")
             return False
         
-        console.print(f"[green]✓ {EMBEDDING_MODEL} is available[/green]")
         return True
         
     except Exception as e:
@@ -282,11 +289,11 @@ def main() -> None:
     
     # Load document
     try:
-        with open("demos/Kinder-und-Hausmärchen-der-Gebrüder-Grimm.txt", "r", encoding="utf8") as f:
+        with open("Kinder-und-Hausmärchen-der-Gebrüder-Grimm.txt", "r", encoding="utf8") as f:
             text = f.read()
         console.print(f"[green]✓ Loaded document: {len(text):,} characters[/green]")
     except FileNotFoundError:
-        console.print("[red]✗ Error: 'demos/Kinder-und-Hausmärchen-der-Gebrüder-Grimm.txt' not found![/red]")
+        console.print("[red]✗ Error: 'Kinder-und-Hausmärchen-der-Gebrüder-Grimm.txt' not found![/red]")
         return
     
     # Create chunks
