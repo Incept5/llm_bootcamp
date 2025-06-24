@@ -18,6 +18,7 @@ scikit-learn>=1.1.0
 
 # Web and API
 requests>=2.28.0
+beautifulsoup4>=4.9.0
 gradio>=3.35.2
 
 # Visualization
