@@ -192,6 +192,25 @@ Extended embedding examples with more sophisticated operations.
 python demos/embedding_demo2.py
 ```
 
+#### `qwen3-embedding-demo.py` - RAG Search with Grimm Fairy Tales
+Demonstrates Retrieval-Augmented Generation (RAG) using Qwen3 embeddings for semantic search.
+
+```bash
+python demos/qwen3-embedding-demo.py
+```
+
+**Prerequisites:**
+- Requires `Kinder- und Hausmärchen der Gebrüder Grimm.txt` file in the project root
+- Needs Ollama with `qwen3` model installed
+
+**What it teaches:**
+- RAG (Retrieval-Augmented Generation) concepts
+- Document chunking and preprocessing
+- Semantic search with embeddings
+- Context-aware answer generation
+- Token counting and management
+- Batch processing for efficiency
+
 ### 3. **Traditional Machine Learning**
 
 #### `ml-demo.py` - Neural Network from Scratch
@@ -231,10 +250,11 @@ python demos/test_keras_fix.py
 4. Experiment with `code/ollama_astrology.py` - advanced local features
 
 ### Advanced Track
-1. Modify sampling parameters in `token_probs.py`
-2. Create custom embedding visualizations
-3. Compare different model architectures
-4. Implement your own LLM applications
+1. Run `demos/qwen3-embedding-demo.py` - explore RAG systems
+2. Modify sampling parameters in `token_probs.py`
+3. Create custom embedding visualizations
+4. Compare different model architectures
+5. Implement your own LLM applications
 
 ---
 
@@ -259,6 +279,11 @@ python demos/test_keras_fix.py
 #### Missing dictionary file
 - **macOS/Linux**: Install `wamerican` or similar package
 - **Windows**: Download a word list and update the path in `word_embeddings.py`
+
+#### Missing Grimm fairy tales text file
+- The `qwen3-embedding-demo.py` requires `Kinder- und Hausmärchen der Gebrüder Grimm.txt`
+- Download from Project Gutenberg or other public domain sources
+- Place in the project root directory
 
 ### Performance Tips
 
@@ -293,6 +318,12 @@ python demos/test_keras_fix.py
 - Cloud APIs (Groq)
 - Performance trade-offs
 - Cost considerations
+
+### 5. **Advanced Techniques**
+- Retrieval-Augmented Generation (RAG)
+- Document chunking and preprocessing
+- Context-aware answer generation
+- Semantic search applications
 
 ---
 
