@@ -3,6 +3,9 @@ from groq import Groq
 from datetime import date
 from rich.console import Console
 from rich.markdown import Markdown
+from dotenv import load_dotenv
+
+load_dotenv()
 
 client = Groq( api_key=os.environ.get("GROQ_API_KEY"))
 
