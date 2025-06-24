@@ -69,3 +69,5 @@ __pycache__/
 /.gradio/
 /gdpr_article_content.txt
 /city_payroll.db
+/.chromadb
+*.chromadb/

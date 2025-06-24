@@ -415,6 +415,36 @@ python demos/rag_alice_test.py
 - Quality assessment of generated answers
 - Debugging RAG pipelines
 
+#### `rag_alice_in_wonderland_chromadb.py` - Production RAG with ChromaDB
+A robust, production-ready RAG (Retrieval-Augmented Generation) system using ChromaDB for persistent vector storage.
+
+```bash
+python demos/rag_alice_in_wonderland_chromadb.py
+```
+
+**Prerequisites:**
+- Requires `Alice_in_Wonderland.txt` file in the demos directory
+- Needs Ollama with embedding models (nomic-embed-text or alternatives)
+- ChromaDB for persistent vector storage
+
+**What it teaches:**
+- Production-grade RAG system architecture
+- Persistent vector storage with ChromaDB
+- Robust error handling and model fallbacks
+- Smart document chunking with context overlap
+- Multiple embedding model support with automatic fallback
+- Context enhancement for better retrieval results
+- Performance optimization with caching and persistence
+- Real-world RAG deployment considerations
+
+**Key Features:**
+- **Persistent Storage**: Embeddings are stored in ChromaDB and reused across sessions
+- **Model Fallbacks**: Automatically tries multiple embedding models if primary fails
+- **Context Enhancement**: Retrieves surrounding paragraphs for better context
+- **Robust Error Handling**: Comprehensive retry logic and graceful degradation
+- **Performance Optimized**: Caches embeddings to avoid recomputation
+- **Production Ready**: Handles edge cases, timeouts, and model availability issues
+
 ### 3. **Traditional Machine Learning**
 
 #### `ml-demo.py` - Neural Network from Scratch
