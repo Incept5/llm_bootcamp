@@ -4,13 +4,53 @@ import torch
 import re
 import matplotlib.pyplot as plt
 
+# MODEL SELECTION GUIDE:
+# - Qwen2.5-7B-Instruct: Best balance of quality vs speed (recommended)
+# - Qwen2.5-14B-Instruct: Higher quality but requires ~28GB VRAM
+# - Mistral-7B: Alternative high-quality 7B model
+# - For GPU with <16GB VRAM, consider using model quantization or smaller models
+
 def load_model():
     torch.set_grad_enabled(False)
-    model_path = "Qwen/Qwen2.5-3B-Instruct"  # Open model, no authentication required
+    
+    # Better model options (choose one):
+    # model_path = "Qwen/Qwen2.5-7B-Instruct"      # 7B model - much better than 3B
+    # model_path = "Qwen/Qwen2.5-14B-Instruct"     # 14B model - even better but requires more VRAM
+    # model_path = "microsoft/DialoGPT-large"       # Good for conversational contexts
+    # model_path = "mistralai/Mistral-7B-v0.1"     # Excellent 7B model
+    
+    model_path = "Qwen/Qwen2.5-7B-Instruct"  # Using 7B model for better predictions
     # model_path = "meta-llama/Llama-3.2-3B"  # Requires HF authentication
-    tokenizer = AutoTokenizer.from_pretrained(model_path, use_safetensors=True)
-    model = AutoModelForCausalLM.from_pretrained(model_path, use_safetensors=True)
-    return tokenizer, model
+    
+    print(f"Loading model: {model_path}")
+    print(f"CUDA available: {torch.cuda.is_available()}")
+    if torch.cuda.is_available():
+        print(f"GPU memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f}GB")
+    
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_path, use_safetensors=True)
+        
+        # Load model with optimized settings
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path, 
+            use_safetensors=True,
+            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+            device_map="auto" if torch.cuda.is_available() else None,
+            low_cpu_mem_usage=True
+        )
+        
+        print(f"Model loaded successfully. Device: {next(model.parameters()).device}")
+        return tokenizer, model
+        
+    except Exception as e:
+        print(f"Error loading model {model_path}: {e}")
+        print("Falling back to smaller model...")
+        # Fallback to smaller model if the larger one fails
+        fallback_path = "Qwen/Qwen2.5-3B-Instruct"
+        tokenizer = AutoTokenizer.from_pretrained(fallback_path, use_safetensors=True)
+        model = AutoModelForCausalLM.from_pretrained(fallback_path, use_safetensors=True)
+        print(f"Fallback model loaded: {fallback_path}")
+        return tokenizer, model
 
 def get_next_token_probs(model, tokenizer, input_string, temperature=1.0, top_p=1.0, top_k=10):
     input_ids = tokenizer.encode(input_string, return_tensors="pt")
