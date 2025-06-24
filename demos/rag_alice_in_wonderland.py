@@ -268,7 +268,7 @@ if __name__ == "__main__":
         print("Required models: nomic-embed-text, qwen3:4b")
         print("Install with: ollama pull nomic-embed-text && ollama pull qwen3:4b")
         
-        rag = SimpleRAG("../Alice in Wonderland.txt")
+        rag = SimpleRAG("demos/Alice_in_Wonderland.txt")
 
         print(f"\nProcessed {len(rag.documents)} chunks")
         
