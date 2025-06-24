@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies House Network Visualization</title>
+    <style>
+        body { margin: 0; }
+        #3d-graph { width: 100vw; height: 100vh; }
+    </style>
+    <script src="https://unpkg.com/3d-force-graph"></script>
+</head>
+<body>
+    <div id="3d-graph"></div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import SpriteText from "https://unpkg.com/three-spritetext/dist/three-spritetext.mjs";
+
+        const data = {
+  "nodes": [
+    {
+      "id": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "name": "Officer: Steve PARISH",
+      "group": 1
+    },
+    {
+      "id": "14201774",
+      "name": "CPFC (WOMEN) LIMITED (ACTIVE)",
+      "group": 2
+    },
+    {
+      "id": "07599217",
+      "name": "RESOURCEFUL MEDIA LIMITED (DISSOLVED)",
+      "group": 5
+    },
+    {
+      "id": "07334675",
+      "name": "CPFC SELHURST PARK LIMITED (ACTIVE)",
+      "group": 2
+    },
+    {
+      "id": "OC355398",
+      "name": "SELHURST PARK (2010) LLP (DISSOLVED)",
+      "group": 5
+    },
+    {
+      "id": "07270793",
+      "name": "CPFC LIMITED (ACTIVE)",
+      "group": 2
+    },
+    {
+      "id": "07206409",
+      "name": "CPFC 2010 LIMITED (ACTIVE)",
+      "group": 2
+    },
+    {
+      "id": "uY23j8M-ZPijfb1XvE3nSSQc-TM",
+      "name": "VELANI, Mitesh",
+      "group": 4
+    },
+    {
+      "id": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "name": "BLITZER, David Scott",
+      "group": 4
+    },
+    {
+      "id": "4aEC58E66V7SdRps2klXyipU5_o",
+      "name": "HARRIS, Joshua Jordan",
+      "group": 4
+    },
+    {
+      "id": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "name": "TEXTOR, John Charles",
+      "group": 4
+    },
+    {
+      "id": "kYslST-KBgqOhA0nI0No31O7ZUU",
+      "name": "VELANI, Mitesh",
+      "group": 4
+    },
+    {
+      "id": "PsYs63AjutOIzw1kLW6waGMjkmI",
+      "name": "VELANI, Mitesh",
+      "group": 4
+    },
+    {
+      "id": "fho2_WTmsjOQ6GLIrYSCx13o3T8",
+      "name": "VELANI, Mitesh",
+      "group": 4
+    },
+    {
+      "id": "09898551",
+      "name": "PALACE MIDCO UK LIMITED (ACTIVE)",
+      "group": 3
+    },
+    {
+      "id": "09898364",
+      "name": "PALACE HOLDCO UK LIMITED (ACTIVE)",
+      "group": 3
+    },
+    {
+      "id": "14404486",
+      "name": "ROAR DEBTCO LIMITED (DISSOLVED)",
+      "group": 5
+    },
+    {
+      "id": "14385313",
+      "name": "EAGLE FOOTBALL HOLDINGS BIDCO LIMITED (ACTIVE)",
+      "group": 3
+    },
+    {
+      "id": "14383202",
+      "name": "EAGLE FOOTBALL HOLDINGS MIDCO LIMITED (ACTIVE)",
+      "group": 3
+    },
+    {
+      "id": "14379286",
+      "name": "EAGLE FOOTBALL HOLDINGS LIMITED (ACTIVE)",
+      "group": 3
+    },
+    {
+      "id": "BLC9nQrPLY5bQpyNMJcdXNWlFno",
+      "name": "VELANI, Mitesh",
+      "group": 4
+    },
+    {
+      "id": "aKnoP7tcZXWjBeehC--YoWDHfeQ",
+      "name": "PARISH, Stephen",
+      "group": 4
+    },
+    {
+      "id": "5-VOl8uyMGaGIBrLKBFUs0yZRUw",
+      "name": "VELANI, Mitesh",
+      "group": 4
+    },
+    {
+      "id": "Mf6RxnREmNCi2R-da2vAQYSnG2Y",
+      "name": "CSC CLS (UK) LIMITED",
+      "group": 4
+    },
+    {
+      "id": "32WBW2CbEE9iALWsurUWsV5A6SA",
+      "name": "AFFOLTER, Mark Robert, Mr.",
+      "group": 4
+    },
+    {
+      "id": "9RqGzQ96I1rIMGynbPXJrRCypNY",
+      "name": "MALLON, Donald William Christopher",
+      "group": 4
+    },
+    {
+      "id": "C_hIvJC-b6s5Jpp0MO9Nks4pHJI",
+      "name": "AFFOLTER, Mark Robert",
+      "group": 4
+    },
+    {
+      "id": "pPHmrlw5TlA_-x9KCU_1U1wC4gg",
+      "name": "BAFER, Alexander",
+      "group": 4
+    },
+    {
+      "id": "KrJxv71bm7KEIaZAz36tr-jImQQ",
+      "name": "CONTE, Jean Pierre Louis, Mr.",
+      "group": 4
+    },
+    {
+      "id": "QoByFTD5DcoWPvbBcOG1np8Mbxk",
+      "name": "DINAN, James Gerard, Mr.",
+      "group": 4
+    },
+    {
+      "id": "xBdlATGS1uRHkGW3mcQflHHtKfc",
+      "name": "HORIN, David Jay",
+      "group": 4
+    },
+    {
+      "id": "2RbVo9wiZcvAzc6fPHBBFk_jL2k",
+      "name": "II, Samuel Oliver Lynn",
+      "group": 4
+    },
+    {
+      "id": "HhKnx6sgRgrvY923bcsuAVaT5XM",
+      "name": "III, Frank Mathew Patterson",
+      "group": 4
+    },
+    {
+      "id": "hYFTsxKNS7rDLUGuQEaMQWndTgA",
+      "name": "KANG, Yongmee Michele",
+      "group": 4
+    },
+    {
+      "id": "2BigZVjies2Y5KJWe6An5DKf8a0",
+      "name": "KNASTER, Alexander",
+      "group": 4
+    },
+    {
+      "id": "nILwfEbHjtWAFn8hcRNHs-Ff5h4",
+      "name": "MILLER, James",
+      "group": 4
+    },
+    {
+      "id": "zl2j0-VFYLr_VOKIqpUbcjDQNMs",
+      "name": "RUBENSTEIN, Gordon Samuel",
+      "group": 4
+    }
+  ],
+  "links": [
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "07599217",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "OC355398",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "uY23j8M-ZPijfb1XvE3nSSQc-TM",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "kYslST-KBgqOhA0nI0No31O7ZUU",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "PsYs63AjutOIzw1kLW6waGMjkmI",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "fho2_WTmsjOQ6GLIrYSCx13o3T8",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "8j4WhP4PBklis59Eeuka9HWO_bE",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "uY23j8M-ZPijfb1XvE3nSSQc-TM",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "09898551",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "09898364",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "09898551",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "09898364",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14404486",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14385313",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14383202",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14201774",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "09898551",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "09898364",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "kYslST-KBgqOhA0nI0No31O7ZUU",
+      "target": "07334675",
+      "value": 2
+    },
+    {
+      "source": "PsYs63AjutOIzw1kLW6waGMjkmI",
+      "target": "07270793",
+      "value": 2
+    },
+    {
+      "source": "fho2_WTmsjOQ6GLIrYSCx13o3T8",
+      "target": "07206409",
+      "value": 2
+    },
+    {
+      "source": "BLC9nQrPLY5bQpyNMJcdXNWlFno",
+      "target": "09898551",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "09898551",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "09898551",
+      "value": 2
+    },
+    {
+      "source": "aKnoP7tcZXWjBeehC--YoWDHfeQ",
+      "target": "09898551",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "09898551",
+      "value": 2
+    },
+    {
+      "source": "5-VOl8uyMGaGIBrLKBFUs0yZRUw",
+      "target": "09898364",
+      "value": 2
+    },
+    {
+      "source": "9QQrs1QsoBZC9A0ig4odMa7gRDE",
+      "target": "09898364",
+      "value": 2
+    },
+    {
+      "source": "4aEC58E66V7SdRps2klXyipU5_o",
+      "target": "09898364",
+      "value": 2
+    },
+    {
+      "source": "aKnoP7tcZXWjBeehC--YoWDHfeQ",
+      "target": "09898364",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "09898364",
+      "value": 2
+    },
+    {
+      "source": "Mf6RxnREmNCi2R-da2vAQYSnG2Y",
+      "target": "14385313",
+      "value": 2
+    },
+    {
+      "source": "32WBW2CbEE9iALWsurUWsV5A6SA",
+      "target": "14385313",
+      "value": 2
+    },
+    {
+      "source": "9RqGzQ96I1rIMGynbPXJrRCypNY",
+      "target": "14385313",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14385313",
+      "value": 2
+    },
+    {
+      "source": "Mf6RxnREmNCi2R-da2vAQYSnG2Y",
+      "target": "14383202",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14383202",
+      "value": 2
+    },
+    {
+      "source": "Mf6RxnREmNCi2R-da2vAQYSnG2Y",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "C_hIvJC-b6s5Jpp0MO9Nks4pHJI",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "pPHmrlw5TlA_-x9KCU_1U1wC4gg",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "KrJxv71bm7KEIaZAz36tr-jImQQ",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "QoByFTD5DcoWPvbBcOG1np8Mbxk",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "xBdlATGS1uRHkGW3mcQflHHtKfc",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "2RbVo9wiZcvAzc6fPHBBFk_jL2k",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "HhKnx6sgRgrvY923bcsuAVaT5XM",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "hYFTsxKNS7rDLUGuQEaMQWndTgA",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "2BigZVjies2Y5KJWe6An5DKf8a0",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "nILwfEbHjtWAFn8hcRNHs-Ff5h4",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "zl2j0-VFYLr_VOKIqpUbcjDQNMs",
+      "target": "14379286",
+      "value": 2
+    },
+    {
+      "source": "QqPIfzzWDCy-_bsNWTLJWqC4Llc",
+      "target": "14379286",
+      "value": 2
+    }
+  ]
+};
+
+        const Graph = ForceGraph3D()
+            (document.getElementById('3d-graph'))
+            .graphData(data)
+            .nodeAutoColorBy('group')
+            .linkOpacity(0.4)
+            .linkWidth(link => link.value * 1.5)
+            .linkColor(link => link.value === 2 ? '#00ff00' : '#ff0000')
+            .nodeLabel(node => {
+                const timestamp = new Date().toLocaleString();
+                if (node.group === 1 || node.group === 4) { // Officers
+                    return `${node.name}<br/><hr/>
+                            Role: ${node.group === 1 ? 'Primary Officer' : 'Connected Officer'}<br/>
+                            Last Updated: ${timestamp}`;
+                } else { // Companies
+                    const type = node.group === 2 ? 'Direct Connection' :
+                               node.group === 3 ? 'Secondary Connection' :
+                               'Inactive Company';
+                    return `${node.name}<br/><hr/>
+                            Type: ${type}<br/>
+                            Last Updated: ${timestamp}`;
+                }
+            })
+            .nodeThreeObject(node => {
+                const sprite = new SpriteText(node.name);
+                sprite.material.depthWrite = false;
+
+                // Set text size and color based on group
+                switch(node.group) {
+                    case 1:  // Root officer
+                        sprite.textHeight = 16;
+                        sprite.color = '#FFFFFF';  // White
+                        break;
+                    case 2:  // Direct connection companies
+                        sprite.textHeight = 14;
+                        sprite.color = '#4169E1';  // Royal blue
+                        break;
+                    case 3:  // Secondary companies
+                        sprite.textHeight = 12;
+                        sprite.color = '#1E90FF';  // Dodger blue
+                        break;
+                    case 4:  // Connected officers
+                        sprite.textHeight = 10;
+                        sprite.color = '#FFD0D0';  // Light pink
+                        break;
+                    case 5:  // Inactive companies
+                        sprite.textHeight = 10;
+                        sprite.color = '#808080';  // Gray
+                        break;
+                    default:
+                        sprite.textHeight = 8;
+                        sprite.color = '#808080';  // Gray
+                }
+
+                return sprite;
+            })
+
+        // Increase the repulsion between nodes for better spacing
+        Graph.d3Force('charge').strength(-300);
+
+        // Add link force to maintain better edge lengths
+        Graph.d3Force('link').distance(200);
+
+    </script>
+</body>
+</html>
