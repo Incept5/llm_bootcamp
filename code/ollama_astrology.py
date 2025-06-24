@@ -5,7 +5,7 @@ from rich.console import Console
 
 def main():
     today = date.today().strftime('%d-%m-%Y')
-    LLM = "qwen2.5:3b"
+    LLM = "qwen3:4b"
     THINKING = True
 
     name = input("Enter your name: ")
