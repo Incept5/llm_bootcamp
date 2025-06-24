@@ -67,3 +67,5 @@ __pycache__/
 /embeddings.pkl
 /3d_plot.html
 /.gradio/
+/gdpr_article_content.txt
+/city_payroll.db
