@@ -21,7 +21,7 @@ import json
 
 
 # Configuration
-EMBEDDING_MODEL = 'nomic-embed-text'  # 768 dimensions
+EMBEDDING_MODEL = 'dengcao/Qwen3-Embedding-0.6B:Q8_0'  # 768 dimensions
 OLLAMA_BASE_URL = 'http://localhost:11434'
 BATCH_SIZE = 10  # Smaller batches for API calls
 MAX_TOKEN_LENGTH = 512
