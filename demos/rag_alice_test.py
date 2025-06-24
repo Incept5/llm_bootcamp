@@ -256,7 +256,7 @@ if __name__ == "__main__":
         print("Initializing RAG system with limited chunks for testing...")
         print("Make sure Ollama is running locally on port 11434")
         
-        rag = SimpleRAG("../Alice in Wonderland.txt", max_chunks=20)
+        rag = SimpleRAG("demos/Alice_in_Wonderland.txt", max_chunks=20)
 
         print(f"\nProcessed {len(rag.documents)} chunks")
         
