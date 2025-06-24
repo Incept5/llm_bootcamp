@@ -94,6 +94,56 @@ Simple example of Groq API usage.
 python code/groq_llama.py
 ```
 
+#### `data_extraction_groq.py` - Structured Data Extraction with Groq
+Demonstrates extracting structured data using Groq API with advanced prompting techniques.
+
+```bash
+python code/data_extraction_groq.py
+```
+
+**What it teaches:**
+- Structured data extraction from unstructured text
+- Advanced prompt engineering for data parsing
+- JSON output formatting
+- Error handling with cloud APIs
+
+#### `formatted_output.py` - Advanced Output Formatting
+Shows different techniques for formatting and presenting LLM outputs.
+
+```bash
+python code/formatted_output.py
+```
+
+**What it teaches:**
+- Output formatting techniques
+- Structured response handling
+- Display optimization for different use cases
+
+#### `fill_in_middle.py` - Code Completion and Fill-in-the-Middle
+Demonstrates fill-in-the-middle capabilities for code completion tasks.
+
+```bash
+python code/fill_in_middle.py
+```
+
+**What it teaches:**
+- Code completion with LLMs
+- Fill-in-the-middle prompting techniques
+- Code generation and completion workflows
+
+#### `scrape.py` - Web Scraping for LLM Data Processing
+Combines web scraping with LLM processing for real-world data extraction.
+
+```bash
+python code/scrape.py
+```
+
+**What it teaches:**
+- Web scraping techniques
+- Combining scraped data with LLM processing
+- Real-world data pipeline construction
+- HTML parsing and content extraction
+
 ### 2. **Local LLM Examples**
 
 #### `LLM_Locally.py` - Ollama Performance Testing
@@ -121,6 +171,32 @@ python code/ollama_astrology.py
 - Model thinking process visualization
 - Advanced Ollama features
 - Temperature and sampling parameters
+
+#### `ollama_astrology_gradio.py` - Web Interface for Astrology AI
+Creates a web-based interface for the astrology AI using Gradio.
+
+```bash
+python code/ollama_astrology_gradio.py
+```
+
+**What it teaches:**
+- Web interface creation with Gradio
+- Interactive LLM applications
+- User-friendly AI interfaces
+- Local model web deployment
+
+#### `data_extraction_ollama.py` - Local Data Extraction
+Demonstrates structured data extraction using local Ollama models.
+
+```bash
+python code/data_extraction_ollama.py
+```
+
+**What it teaches:**
+- Local model data extraction
+- Offline processing capabilities
+- Structured output with local LLMs
+- Privacy-focused data processing
 
 #### `qwen3.py` - Minimal Ollama Example
 Simplest possible Ollama integration.
@@ -283,6 +359,12 @@ Extended embedding examples with more sophisticated operations.
 python demos/embedding_demo2.py
 ```
 
+**What it teaches:**
+- Advanced embedding manipulation
+- Vector arithmetic operations
+- Semantic relationship exploration
+- Complex similarity calculations
+
 #### `qwen3-embedding-demo.py` - RAG Search with Grimm Fairy Tales
 Demonstrates Retrieval-Augmented Generation (RAG) using Qwen3 embeddings for semantic search.
 
@@ -301,6 +383,37 @@ python demos/qwen3-embedding-demo.py
 - Context-aware answer generation
 - Token counting and management
 - Batch processing for efficiency
+
+#### `rag_alice_in_wonderland.py` - RAG with Alice in Wonderland
+Implements a complete RAG system using Alice in Wonderland text for question answering.
+
+```bash
+python demos/rag_alice_in_wonderland.py
+```
+
+**Prerequisites:**
+- Requires `Alice_in_Wonderland.txt` file in the demos directory
+- Needs Ollama with embedding and chat models installed
+
+**What it teaches:**
+- Complete RAG pipeline implementation
+- Document preprocessing and chunking strategies
+- Vector database concepts
+- Question-answering with context
+- Performance optimization for RAG systems
+
+#### `rag_alice_test.py` - RAG System Testing
+Provides testing utilities and examples for the Alice in Wonderland RAG system.
+
+```bash
+python demos/rag_alice_test.py
+```
+
+**What it teaches:**
+- RAG system testing methodologies
+- Evaluation metrics for retrieval systems
+- Quality assessment of generated answers
+- Debugging RAG pipelines
 
 ### 3. **Traditional Machine Learning**
 
