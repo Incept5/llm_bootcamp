@@ -45,6 +45,12 @@ Educational tools that demonstrate core LLM concepts through hands-on experiment
    GROQ_API_KEY=your_api_key_here
    ```
 
+#### Kaggle (for dataset access)
+1. Create a Kaggle account at [https://www.kaggle.com](https://www.kaggle.com)
+2. For API access, go to Account > API > Create New Token
+3. Place the downloaded `kaggle.json` in your home directory under `.kaggle/`
+4. Set permissions: `chmod 600 ~/.kaggle/kaggle.json` (Linux/macOS)
+
 ## Installation
 
 1. Clone this repository:
@@ -122,6 +128,33 @@ Simplest possible Ollama integration.
 ```bash
 python code/qwen3.py
 ```
+
+### 3. **Data Processing Examples**
+
+#### `load_kaggle.py` - Kaggle Dataset Loader
+Utility for downloading and loading Kaggle datasets for analysis.
+
+```bash
+python code/load_kaggle.py
+```
+
+**What it teaches:**
+- Kaggle dataset integration with `kagglehub`
+- Automatic CSV file discovery and loading
+- Pandas DataFrame manipulation
+- Dataset exploration and inspection
+- File system navigation and data handling
+
+**Features:**
+- Downloads datasets from Kaggle using the `kagglehub` library
+- Automatically finds and loads CSV files from downloaded datasets
+- Provides dataset shape and preview functionality
+- Includes JSON export capabilities for data inspection
+- Example implementation using Trump Tweets dataset
+
+**Prerequisites:**
+- Kaggle account (for dataset access)
+- Internet connection for dataset downloads
 
 ---
 
@@ -242,6 +275,7 @@ python demos/test_keras_fix.py
 2. Try `demos/token_test.py` - understand tokenization
 3. Run `code/groq_astrologer.py` - see structured prompting
 4. Explore `demos/embedding_example.py` - learn about embeddings
+5. Try `code/load_kaggle.py` - learn data loading and processing
 
 ### Intermediate Track
 1. Run `code/LLM_Locally.py` - compare local vs cloud performance
@@ -324,6 +358,12 @@ python demos/test_keras_fix.py
 - Document chunking and preprocessing
 - Context-aware answer generation
 - Semantic search applications
+
+### 6. **Data Integration**
+- Kaggle dataset integration
+- Automated data discovery and loading
+- CSV processing and DataFrame operations
+- Data exploration and visualization preparation
 
 ---
 
