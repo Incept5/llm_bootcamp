@@ -248,45 +248,59 @@ class ChromaDBRetriever:
             print(f"Created new ChromaDB collection: {self.collection_name}")
             return False
 
+    def has_existing_data(self) -> bool:
+        """Check if ChromaDB already has documents for this collection"""
+        collection_exists = self._setup_collection()
+        if collection_exists:
+            try:
+                existing_count = self.collection.count()
+                return existing_count > 0
+            except Exception as e:
+                print(f"Error checking existing data: {e}")
+                return False
+        return False
+    
+    def load_existing_documents(self) -> List[Document]:
+        """Load existing documents from ChromaDB"""
+        try:
+            existing_count = self.collection.count()
+            print(f"Found {existing_count} existing documents in ChromaDB")
+            
+            # Get all documents from ChromaDB
+            results = self.collection.get(include=['embeddings', 'metadatas', 'documents'])
+            
+            # Convert back to Document objects
+            self.documents = []
+            for i, (doc_id, text, metadata, embedding) in enumerate(zip(
+                results['ids'], results['documents'], results['metadatas'], results['embeddings']
+            )):
+                # Restore original_paragraphs from metadata if available
+                if 'original_paragraphs_json' in metadata:
+                    metadata['original_paragraphs'] = json.loads(metadata['original_paragraphs_json'])
+                    if self.original_paragraphs is None:
+                        self.original_paragraphs = metadata['original_paragraphs']
+                
+                doc = Document(
+                    text=text,
+                    metadata=metadata,
+                    embedding=np.array(embedding) if embedding else None
+                )
+                self.documents.append(doc)
+            
+            print(f"Loaded {len(self.documents)} documents from existing ChromaDB")
+            return self.documents
+            
+        except Exception as e:
+            print(f"Error loading existing documents: {e}")
+            return []
+
     def add_documents(self, documents: List[Document]):
         """Add documents to ChromaDB collection"""
-        collection_exists = self._setup_collection()
+        self._setup_collection()
         
         # Store original paragraphs for context enhancement
         if documents and 'original_paragraphs' in documents[0].metadata:
             self.original_paragraphs = documents[0].metadata['original_paragraphs']
-        
-        # If collection already exists and has documents, load them
-        if collection_exists:
-            try:
-                existing_count = self.collection.count()
-                if existing_count > 0:
-                    print(f"Found {existing_count} existing documents in ChromaDB")
-                    # Get all documents from ChromaDB
-                    results = self.collection.get(include=['embeddings', 'metadatas', 'documents'])
-                    
-                    # Convert back to Document objects
-                    self.documents = []
-                    for i, (doc_id, text, metadata, embedding) in enumerate(zip(
-                        results['ids'], results['documents'], results['metadatas'], results['embeddings']
-                    )):
-                        # Restore original_paragraphs from metadata if available
-                        if 'original_paragraphs_json' in metadata:
-                            metadata['original_paragraphs'] = json.loads(metadata['original_paragraphs_json'])
-                            if self.original_paragraphs is None:
-                                self.original_paragraphs = metadata['original_paragraphs']
-                        
-                        doc = Document(
-                            text=text,
-                            metadata=metadata,
-                            embedding=np.array(embedding) if embedding else None
-                        )
-                        self.documents.append(doc)
-                    
-                    print(f"Loaded {len(self.documents)} documents from existing ChromaDB")
-                    return
-            except Exception as e:
-                print(f"Error loading existing documents: {e}")
         
         # Add new documents to ChromaDB
         valid_documents = [doc for doc in documents if doc.embedding is not None]
@@ -405,11 +419,17 @@ class SimpleRAG:
         self.chunker = SimpleChunker()
         self.ollama_client = OllamaClient()
         self.retriever = ChromaDBRetriever(persist_directory)
-
-        # Read and process the text file
         self.file_path = Path(file_path)
-        self.documents = self._load_and_process_text()
-        self.retriever.add_documents(self.documents)
+        
+        # Check if we already have existing data in ChromaDB
+        if self.retriever.has_existing_data():
+            print("Using existing ChromaDB data...")
+            self.documents = self.retriever.load_existing_documents()
+        else:
+            print("Creating new ChromaDB data...")
+            # Read and process the text file
+            self.documents = self._load_and_process_text()
+            self.retriever.add_documents(self.documents)
 
     def _load_and_process_text(self) -> List[Document]:
         try:
@@ -428,15 +448,7 @@ class SimpleRAG:
             chunks = self.chunker.chunk_text(text)
             print(f"Created {len(chunks)} chunks")
 
-            # Check if we already have embeddings in ChromaDB
-            if hasattr(self.retriever, 'collection') and self.retriever.collection:
-                try:
-                    existing_count = self.retriever.collection.count()
-                    if existing_count > 0:
-                        print(f"Using existing embeddings from ChromaDB ({existing_count} documents)")
-                        return chunks  # Return chunks without embeddings, they'll be loaded from ChromaDB
-                except:
-                    pass
+
 
             # Generate embeddings for all chunks
             print("Generating embeddings...")
