@@ -35,6 +35,7 @@ Educational tools that demonstrate core LLM concepts through hands-on experiment
    ollama pull qwen3:0.6b
    ollama pull qwen3:4b
    ollama pull all-minilm:33m-l12-v2-fp16
+   ollama pull nomic-embed-text
    ```
 
 #### Groq API (for cloud-based inference)
@@ -444,6 +445,64 @@ python demos/rag_alice_in_wonderland_chromadb.py
 - **Robust Error Handling**: Comprehensive retry logic and graceful degradation
 - **Performance Optimized**: Caches embeddings to avoid recomputation
 - **Production Ready**: Handles edge cases, timeouts, and model availability issues
+
+#### `ollama-rag-demo.py` - Ollama-based RAG with Grimm Fairy Tales
+A complete RAG (Retrieval-Augmented Generation) system using Ollama models for both embeddings and text generation, demonstrated with German Grimm fairy tales.
+
+```bash
+cd demos
+python ollama-rag-demo.py
+```
+
+**Prerequisites:**
+- Requires `Kinder-und-Hausmärchen-der-Gebrüder-Grimm.txt` file in the demos directory
+- Needs Ollama with the following models:
+  ```bash
+  ollama pull nomic-embed-text
+  ollama pull qwen3:4b
+  ```
+- Ollama service running (`ollama serve`)
+
+**What it teaches:**
+- Complete RAG pipeline using only local models
+- Ollama API integration for embeddings and chat
+- Batch processing for efficient embedding generation
+- Concurrent API calls with ThreadPoolExecutor
+- Document chunking strategies for large texts
+- Cosine similarity for semantic search
+- Context-aware answer generation with retrieved information
+- Model availability checking and error handling
+- Performance optimization with batching and concurrency
+
+**Key Features:**
+- **100% Local**: Uses only Ollama models, no external APIs required
+- **Batch Processing**: Efficiently processes multiple text chunks in parallel
+- **Smart Chunking**: Splits documents using natural boundaries (quadruple newlines)
+- **Token Counting**: Uses tiktoken for accurate token counting and management
+- **Rich Output**: Beautiful console output with progress indicators and formatting
+- **Robust Error Handling**: Comprehensive model checking and graceful failure handling
+- **Performance Metrics**: Shows timing information for embedding generation and search
+- **Demo Queries**: Includes predefined questions about Grimm fairy tales
+- **Concurrent Processing**: Uses ThreadPoolExecutor for faster embedding generation
+
+**Demo Output:**
+The script runs three example queries about Grimm fairy tales:
+1. "What did the frog king promise the princess in exchange for her golden ball?"
+2. "What happened to Hansel and Gretel in the forest?"
+3. "What did Little Red Riding Hood's mother tell her to do?"
+
+For each query, it shows:
+- Retrieved text chunks with similarity scores and token counts
+- Search timing performance
+- AI-generated answers based on the retrieved context
+
+**Technical Details:**
+- Uses `nomic-embed-text` for 768-dimension embeddings
+- Processes text in batches of 10 for optimal performance
+- Normalizes embeddings for accurate cosine similarity
+- Retrieves top 6 most relevant chunks per query
+- Uses top 3 chunks as context for answer generation
+- Supports concurrent processing with configurable worker threads
 
 ### 3. **Traditional Machine Learning**
 
