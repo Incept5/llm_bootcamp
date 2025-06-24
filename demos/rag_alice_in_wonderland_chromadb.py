@@ -542,7 +542,7 @@ if __name__ == "__main__":
         print("Make sure Ollama is running locally on port 11434")
         
         # Initialize RAG system
-        rag = SimpleRAG("demos/Alice_in_Wonderland.txt", persist_directory=".chromadb")
+        rag = SimpleRAG("Alice_in_Wonderland.txt", persist_directory=".chromadb")
 
         print(f"\nProcessed {len(rag.documents)} chunks")
         if rag.retriever.documents:
