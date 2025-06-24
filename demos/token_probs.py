@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 
 def load_model():
     torch.set_grad_enabled(False)
-    # model_path = "Qwen/Qwen2-7B-Instruct"
-    model_path = "meta-llama/Llama-3.2-3B"
+    model_path = "Qwen/Qwen2.5-3B-Instruct"  # Open model, no authentication required
+    # model_path = "meta-llama/Llama-3.2-3B"  # Requires HF authentication
     tokenizer = AutoTokenizer.from_pretrained(model_path, use_safetensors=True)
     model = AutoModelForCausalLM.from_pretrained(model_path, use_safetensors=True)
     return tokenizer, model
