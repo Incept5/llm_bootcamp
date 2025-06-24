@@ -156,6 +156,64 @@ python code/load_kaggle.py
 - Kaggle account (for dataset access)
 - Internet connection for dataset downloads
 
+#### `payroll.py` - City Payroll Data Processing
+Comprehensive data processing pipeline for Los Angeles City payroll data.
+
+```bash
+python code/payroll.py
+```
+
+**What it teaches:**
+- Real-world data cleaning and preprocessing
+- Working with monetary and percentage data formats
+- SQLite database creation and indexing
+- Data validation and error handling
+- Statistical analysis and reporting
+
+**Features:**
+- Downloads LA City payroll dataset from Kaggle
+- Cleans monetary values (removes $, commas) and percentage data
+- Creates SQLite database with proper indexing
+- Generates comprehensive data summaries and statistics
+- Handles missing and invalid data gracefully
+- Provides salary distribution analysis
+
+**Prerequisites:**
+- Kaggle account and API credentials
+- Sufficient disk space for large dataset (~500MB)
+
+#### `payroll2.py` - AI-Powered SQL Query Generation
+Demonstrates natural language to SQL conversion using local LLMs.
+
+```bash
+python code/payroll2.py
+```
+
+**What it teaches:**
+- Natural language to SQL translation
+- LLM integration for data analysis
+- Database schema introspection
+- Error handling for LLM responses
+- Structured prompt engineering for code generation
+
+**Features:**
+- Automatically extracts database schema information
+- Provides sample data context to the LLM
+- Generates SQL queries from natural language prompts
+- Robust error handling for malformed LLM responses
+- Executes queries and formats results as markdown tables
+- Uses local Qwen2.5-Coder model for code generation
+
+**Prerequisites:**
+- Ollama with `qwen2.5-coder:latest` model installed
+- SQLite database created by `payroll.py`
+- Local LLM service running
+
+**Example Output:**
+- Generates queries like "average hourly rate for LAPD employees by year"
+- Displays results in formatted markdown tables
+- Shows the complete workflow from schema to results
+
 ---
 
 ## Interactive Demos (`demos/` directory)
@@ -275,7 +333,9 @@ python demos/test_keras_fix.py
 2. Try `demos/token_test.py` - understand tokenization
 3. Run `code/groq_astrologer.py` - see structured prompting
 4. Explore `demos/embedding_example.py` - learn about embeddings
-5. Try `code/load_kaggle.py` - learn data loading and processing
+5. Try `code/load_kaggle.py` - learn basic data loading
+6. Run `code/payroll.py` - see real-world data processing
+7. Try `code/payroll2.py` - experience AI-powered SQL generation
 
 ### Intermediate Track
 1. Run `code/LLM_Locally.py` - compare local vs cloud performance
@@ -359,11 +419,21 @@ python demos/test_keras_fix.py
 - Context-aware answer generation
 - Semantic search applications
 
-### 6. **Data Integration**
+### 6. **Data Integration and Processing**
 - Kaggle dataset integration
 - Automated data discovery and loading
 - CSV processing and DataFrame operations
 - Data exploration and visualization preparation
+- Real-world data cleaning and validation
+- SQLite database creation and optimization
+- Statistical analysis and reporting
+
+### 7. **AI-Powered Data Analysis**
+- Natural language to SQL translation
+- Database schema introspection
+- LLM integration for code generation
+- Error handling for AI-generated code
+- Structured prompting for technical tasks
 
 ---
 
