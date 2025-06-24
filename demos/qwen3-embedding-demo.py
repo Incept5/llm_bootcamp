@@ -150,7 +150,7 @@ def display_results(query: str, results: List[Dict[str, Any]]) -> None:
 
 def generate_answer(query: str, results: List[Dict[str, Any]]) -> None:
     """Generate a complete answer using qwen3 via ollama with retrieved context."""
-    LLM = "qwen3"
+    LLM = "qwen3:4b"
     THINKING = False
     console = Console()
     
@@ -216,11 +216,11 @@ def main() -> None:
     
     # Load document
     try:
-        with open("Kinder- und Hausmärchen der Gebrüder Grimm.txt", "r", encoding="utf8") as f:
+        with open("demos/Kinder-und-Hausmärchen-der-Gebrüder-Grimm.txt", "r", encoding="utf8") as f:
             text = f.read()
         print(f"Loaded document: {len(text):,} characters")
     except FileNotFoundError:
-        print("Error: 'Kinder- und Hausmärchen der Gebrüder Grimm.txt' not found!")
+        print("Error: 'demos/Kinder-und-Hausmärchen-der-Gebrüder-Grimm.txt' not found!")
         return
     
     # Create chunks
