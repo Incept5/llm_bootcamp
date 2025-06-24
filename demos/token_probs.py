@@ -19,7 +19,7 @@ def load_model():
     # model_path = "microsoft/DialoGPT-large"       # Good for conversational contexts
     # model_path = "mistralai/Mistral-7B-v0.1"     # Excellent 7B model
     
-    model_path = "Qwen/Qwen2.5-7B-Instruct"  # Using 7B model for better predictions
+    model_path = "gpt2-medium"  # Using 7B model for better predictions
     # model_path = "meta-llama/Llama-3.2-3B"  # Requires HF authentication
     
     print(f"Loading model: {model_path}")
