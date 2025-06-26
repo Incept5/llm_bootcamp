@@ -363,7 +363,7 @@ python demos/embedding_demo2.py
 Demonstrates Retrieval-Augmented Generation (RAG) using Qwen3 embeddings for semantic search.
 
 ```bash
-python demos/qwen3-embedding-demo.py
+python demos/grimm_fairy_tales_rag_demo.py
 ```
 
 **Prerequisites:**

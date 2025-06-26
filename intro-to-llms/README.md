@@ -405,7 +405,7 @@ Planned additional test scripts:
 
 3. Run the local test script:
    ```bash
-   cd intro_to_llms
+   cd intro-to-llms
    python local_llm_using_ollama.py
    ```
 
@@ -422,7 +422,7 @@ Planned additional test scripts:
 
 3. Run the cloud test script:
    ```bash
-   cd intro_to_llms
+   cd intro-to-llms
    python cloud_llm_using_groq.py
    ```
 

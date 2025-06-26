@@ -71,7 +71,7 @@ __pycache__/
 /city_payroll.db
 /.chromadb
 *.chromadb/
-/intro_to_llms/model_test_results*
+/intro-to-llms/model_test_results*
 /tokens-in-llms/tokenization_comparison.png
 /tokens-in-llms/token_count_comparison.png
 /tokens-in-llms/tokenization_results.json

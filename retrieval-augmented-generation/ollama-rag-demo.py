@@ -4,7 +4,7 @@
 Ollama-based Grimm Fairy Tales RAG Search Demo
 
 A minimal RAG system using Ollama embeddings for demonstration purposes.
-Equivalent to qwen3-embedding-demo.py but using Ollama models throughout.
+Equivalent to grimm_fairy_tales_rag_demo.py but using Ollama models throughout.
 """
 
 import numpy as np
