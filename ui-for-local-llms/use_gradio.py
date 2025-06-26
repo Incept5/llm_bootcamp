@@ -287,7 +287,9 @@ def create_interface():
             return "", "Select a model and enter a prompt to get started!"
         
         def handle_submit(model_name, prompt, system_prompt):
-            return ollama_ui.stream_response(model_name, prompt, system_prompt)
+            # For streaming responses, we need to iterate through the generator
+            for response in ollama_ui.stream_response(model_name, prompt, system_prompt):
+                yield response
         
         # Wire up events
         refresh_btn.click(
