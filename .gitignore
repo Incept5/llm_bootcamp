@@ -76,3 +76,5 @@ __pycache__/
 /tokens-in-llms/token_count_comparison.png
 /tokens-in-llms/tokenization_results.json
 /tokens-in-llms/tokenization_time_comparison.png
+/embedding/test_embeddings.pkl
+/embedding/embeddings.pkl
