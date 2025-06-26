@@ -1,6 +1,6 @@
 import transformers
 
-tokenizer = transformers.AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
+tokenizer = transformers.AutoTokenizer.from_pretrained("gpt2")
 
 def tokenize_text(text):
     inputs = tokenizer(text, return_tensors="pt")

@@ -294,7 +294,7 @@ python code/payroll2.py
 Demonstrates how text is broken down into tokens.
 
 ```bash
-python demos/token_test.py
+python demos/simple_token_test.py
 ```
 
 **What it teaches:**
@@ -307,7 +307,7 @@ python demos/token_test.py
 Interactive web interface for exploring token probability distributions.
 
 ```bash
-python demos/token_probs.py
+python demos/predict_next_token.py
 ```
 
 **What it teaches:**
