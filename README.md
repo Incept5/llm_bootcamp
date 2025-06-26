@@ -199,13 +199,6 @@ python code/data_extraction_ollama.py
 - Structured output with local LLMs
 - Privacy-focused data processing
 
-#### `qwen3.py` - Minimal Ollama Example
-Simplest possible Ollama integration.
-
-```bash
-python code/qwen3.py
-```
-
 ### 3. **Data Processing Examples**
 
 #### `load_kaggle.py` - Kaggle Dataset Loader
