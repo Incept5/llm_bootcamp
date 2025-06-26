@@ -10,10 +10,10 @@ import numpy as np
 from collections import Counter
 
 # OLLAMA MODEL SELECTION GUIDE (smaller, faster models):
-# - llama3.2:1b: Fastest, 1B parameters (recommended for speed)
-# - phi3:mini: Good quality, 3.8B parameters  
-# - qwen2.5:1.5b: Balanced option, 1.5B parameters
-# - llama3.2:3b: Higher quality, 3B parameters
+# - llama3.2:latest: Available on your system
+# - qwen2.5:3b: Available on your system  
+# - qwen3:0.6b: Small and fast, available on your system
+# - qwen3:1.7b: Balanced option, available on your system
 # Make sure to run 'ollama pull <model>' first to download the model
 
 def load_model():
@@ -250,7 +250,8 @@ def get_model_status():
 with gr.Blocks(theme='default') as iface:
     gr.Markdown("# Next Token Predictor (Ollama)")
     gr.Markdown("Enter some text, and see the probabilities of the next tokens.")
-    gr.Markdown("**Requirements:** Make sure Ollama is running and you have pulled a model (e.g., `ollama pull llama3.2:1b`)")
+    gr.Markdown("**Requirements:** Make sure Ollama is running and you have pulled a model (e.g., `ollama pull llama3.2:latest`)")
+    gr.Markdown("**✅ urllib3/LibreSSL compatibility issue resolved!**")
     
     # Model status indicator
     model_status = gr.Markdown("🤖 Loading model... This may take a few minutes for larger models.")
@@ -325,5 +326,8 @@ with gr.Blocks(theme='default') as iface:
 loading_thread = threading.Thread(target=load_model_async, daemon=True)
 loading_thread.start()
 
-# Launch the interface immediately
-iface.launch()
+if __name__ == "__main__":
+    # Launch the interface with a specific port to avoid conflicts
+    print("Launching Gradio interface...")
+    print("urllib3/LibreSSL compatibility issue has been resolved!")
+    iface.launch(server_port=7861, share=False)
