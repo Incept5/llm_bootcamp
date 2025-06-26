@@ -195,6 +195,21 @@ OLLAMA_BASE_URL=http://localhost:11435
 
 ### Common Issues
 
+#### Container Shows as "Unhealthy" or Can't Connect
+```bash
+# Check container status
+docker ps
+
+# If container shows "unhealthy", check logs for startup progress
+docker logs open-webui --tail 20
+
+# First startup takes time (downloading embedding models)
+# Wait for "Application startup complete" message
+
+# Test if service is responding
+curl http://localhost:3000
+```
+
 #### Can't Connect to Ollama
 ```bash
 # Check if Ollama is running
