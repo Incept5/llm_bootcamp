@@ -151,7 +151,7 @@ python code/scrape.py
 Benchmarks local LLM performance across different types of tasks.
 
 ```bash
-python code/LLM_Locally.py
+python code/simple_reasoning_ollama.py
 ```
 
 **What it teaches:**

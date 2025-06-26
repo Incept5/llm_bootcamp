@@ -68,7 +68,7 @@ __pycache__/
 /3d_plot.html
 /.gradio/
 /gdpr_article_content.txt
-/city_payroll.db
+/extracting-data/city_payroll.db
 /.chromadb
 *.chromadb/
 /intro-to-llms/model_test_results*
@@ -78,3 +78,4 @@ __pycache__/
 /tokens-in-llms/tokenization_time_comparison.png
 /embedding/test_embeddings.pkl
 /embedding/embeddings.pkl
+/extracting-data/gdpr_article_content.txt
