@@ -56,8 +56,8 @@ Educational tools that demonstrate core LLM concepts through hands-on experiment
 
 1. Clone this repository:
    ```bash
-   git clone <repository-url>
-   cd munich_ai_2025
+   git clone git@github.com:Incept5/llm_bootcamp.git
+   cd llm_bootcamp
    ```
 
 2. Install dependencies:
