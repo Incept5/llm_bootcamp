@@ -1,7 +1,130 @@
 
-# UI for Local LLMs - Open WebUI Setup Guide
+# UI for Local LLMs - Setup Guide
 
-This guide explains how to set up Open WebUI to interact with your local Ollama LLMs, providing a user-friendly web interface similar to ChatGPT.
+This guide explains two approaches to creating user-friendly web interfaces for your local Ollama LLMs:
+1. **Custom Gradio Script** - A lightweight Python script for quick setup
+2. **Open WebUI** - A full-featured web application similar to ChatGPT
+
+## Comparison: Gradio vs Open WebUI
+
+| Feature | Custom Gradio Script | Open WebUI |
+|---------|---------------------|------------|
+| **Setup Complexity** | Simple (single Python file) | Moderate (Docker recommended) |
+| **Resource Usage** | Lightweight | More resource-intensive |
+| **Features** | Basic chat interface | Full-featured (chat history, RAG, multi-user) |
+| **Customization** | Easy to modify Python code | Configuration-based |
+| **Authentication** | None (local use) | Built-in user management |
+| **Document Upload** | Not included | Built-in RAG support |
+| **Chat History** | Session-based only | Persistent storage |
+| **API Access** | None | OpenAI-compatible API |
+| **Best For** | Development, testing, simple use | Production, team use, advanced features |
+
+---
+
+## Option 1: Custom Gradio Script (Recommended for Getting Started)
+
+### Overview
+The included `use_gradio.py` script provides a simple, lightweight web interface using Gradio. It's perfect for:
+- Quick testing of local models
+- Development and experimentation
+- Learning how to build LLM interfaces
+- Minimal resource usage
+
+### Features
+- 🚀 **Auto-discovery**: Automatically detects available Ollama models
+- 📡 **Real-time streaming**: Responses appear as they're generated
+- ⚙️ **System prompts**: Customize AI behavior with system instructions
+- 🔄 **Model switching**: Easy switching between different models
+- 🛠️ **Error handling**: Clear error messages and status feedback
+- 🎨 **Clean UI**: Responsive interface optimized for chat
+
+### Prerequisites
+1. **Ollama installed and running**
+   ```bash
+   # Install Ollama (if not already installed)
+   curl -fsSL https://ollama.ai/install.sh | sh
+   
+   # Start Ollama service
+   ollama serve
+   ```
+
+2. **Python 3.7+ with required packages**
+   ```bash
+   pip install gradio requests
+   ```
+
+3. **At least one LLM model downloaded**
+   ```bash
+   # Download popular models
+   ollama pull llama3.2
+   ollama pull mistral
+   ollama pull codellama
+   ```
+
+### Quick Start
+
+1. **Run the Gradio script**:
+   ```bash
+   python use_gradio.py
+   ```
+
+2. **Access the interface**: 
+   - Opens automatically in your browser at `http://localhost:7860`
+   - Or manually navigate to the URL shown in the terminal
+
+3. **Start chatting**:
+   - Select a model from the dropdown
+   - Enter your prompt
+   - Watch responses stream in real-time
+
+### Customization
+
+The script is designed to be easily modified. Key customization points:
+
+```python
+# Change server settings
+self.ollama_url = "http://localhost:11434"  # Ollama server URL
+
+# Modify interface launch settings
+interface.launch(
+    server_port=7860,        # Change port
+    share=True,              # Create public URL
+    auth=("user", "pass"),   # Add basic auth
+)
+
+# Customize default system prompt
+system_prompt = gr.Textbox(
+    value="Your custom default system prompt here"
+)
+```
+
+### Troubleshooting Gradio Setup
+
+**Models not appearing**:
+```bash
+# Check Ollama is running
+curl http://localhost:11434/api/tags
+
+# List available models
+ollama list
+```
+
+**Connection errors**:
+- Ensure Ollama is running: `ollama serve`
+- Check firewall settings
+- Verify port 11434 is accessible
+
+**Package installation issues**:
+```bash
+# Install in virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install gradio requests
+```
+
+---
+
+## Option 2: Open WebUI (Full-Featured Solution)
 
 ## What is Open WebUI?
 
