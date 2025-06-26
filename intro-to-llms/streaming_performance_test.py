@@ -77,7 +77,7 @@ class StreamingTester:
             {
                 "name": "Code Generation",
                 "prompt": "Write a Python function that reads a CSV file, processes the data, and creates a simple visualization. Include comments and error handling.",
-                "expected_length": "code"
+                "expected_length": "extras"
             }
         ]
 

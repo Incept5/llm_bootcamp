@@ -106,7 +106,7 @@ def main():
     matches = re.findall(sql_pattern, generated_query, re.DOTALL)
 
     if not matches:
-        # If no SQL code blocks found, try to extract SQL directly
+        # If no SQL extras blocks found, try to extract SQL directly
         # Look for SELECT statements
         select_pattern = r"(SELECT.*?;?)"
         select_matches = re.findall(select_pattern, generated_query, re.DOTALL | re.IGNORECASE)

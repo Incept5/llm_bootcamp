@@ -79,7 +79,7 @@ Educational tools that demonstrate core LLM concepts through hands-on experiment
 Demonstrates structured prompting and rich text output formatting.
 
 ```bash
-python code/groq_astrologer.py
+python extras/groq_astrologer.py
 ```
 
 **What it teaches:**
@@ -92,14 +92,14 @@ python code/groq_astrologer.py
 Simple example of Groq API usage.
 
 ```bash
-python code/groq_llama.py
+python extras/groq_llama.py
 ```
 
 #### `data_extraction_groq.py` - Structured Data Extraction with Groq
 Demonstrates extracting structured data using Groq API with advanced prompting techniques.
 
 ```bash
-python code/data_extraction_groq.py
+python extras/data_extraction_groq.py
 ```
 
 **What it teaches:**
@@ -112,7 +112,7 @@ python code/data_extraction_groq.py
 Shows different techniques for formatting and presenting LLM outputs.
 
 ```bash
-python code/formatted_output.py
+python extras/formatted_output.py
 ```
 
 **What it teaches:**
@@ -124,7 +124,7 @@ python code/formatted_output.py
 Demonstrates fill-in-the-middle capabilities for code completion tasks.
 
 ```bash
-python code/fill_in_middle.py
+python extras/fill_in_middle.py
 ```
 
 **What it teaches:**
@@ -136,7 +136,7 @@ python code/fill_in_middle.py
 Combines web scraping with LLM processing for real-world data extraction.
 
 ```bash
-python code/scrape.py
+python extras/scrape.py
 ```
 
 **What it teaches:**
@@ -151,7 +151,7 @@ python code/scrape.py
 Benchmarks local LLM performance across different types of tasks.
 
 ```bash
-python code/simple_reasoning_ollama.py
+python extras/simple_reasoning_ollama.py
 ```
 
 **What it teaches:**
@@ -164,7 +164,7 @@ python code/simple_reasoning_ollama.py
 Advanced example showing the "thinking" feature in local models.
 
 ```bash
-python code/ollama_astrology.py
+python extras/ollama_astrology.py
 ```
 
 **What it teaches:**
@@ -177,7 +177,7 @@ python code/ollama_astrology.py
 Creates a web-based interface for the astrology AI using Gradio.
 
 ```bash
-python code/ollama_astrology_gradio.py
+python extras/ollama_astrology_gradio.py
 ```
 
 **What it teaches:**
@@ -190,7 +190,7 @@ python code/ollama_astrology_gradio.py
 Demonstrates structured data extraction using local Ollama models.
 
 ```bash
-python code/data_extraction_ollama.py
+python extras/data_extraction_ollama.py
 ```
 
 **What it teaches:**
@@ -205,7 +205,7 @@ python code/data_extraction_ollama.py
 Utility for downloading and loading Kaggle datasets for analysis.
 
 ```bash
-python code/load_kaggle.py
+python extras/load_kaggle.py
 ```
 
 **What it teaches:**
@@ -230,7 +230,7 @@ python code/load_kaggle.py
 Comprehensive data processing pipeline for Los Angeles City payroll data.
 
 ```bash
-python code/payroll.py
+python extras/payroll.py
 ```
 
 **What it teaches:**
@@ -256,7 +256,7 @@ python code/payroll.py
 Demonstrates natural language to SQL conversion using local LLMs.
 
 ```bash
-python code/payroll2.py
+python extras/payroll2.py
 ```
 
 **What it teaches:**

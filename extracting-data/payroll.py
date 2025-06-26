@@ -141,7 +141,7 @@ def load_payroll_data(csv_path, db_path='city_payroll.db'):
 
 # Main execution
 if __name__ == "__main__":
-    # Use the kagglehub path from the provided code
+    # Use the kagglehub path from the provided extras
     path = kagglehub.dataset_download("cityofLA/city-payroll-data")
     print("Path to dataset files:", path)
 

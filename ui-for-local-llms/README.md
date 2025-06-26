@@ -399,7 +399,7 @@ Create a `models.json` file for custom model settings:
       "name": "Llama 3.2 8B",
       "description": "Meta's Llama 3.2 8B parameter model",
       "size": "4.7GB",
-      "capabilities": ["chat", "code"]
+      "capabilities": ["chat", "extras"]
     }
   ]
 }

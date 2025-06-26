@@ -61,7 +61,7 @@ class ModelSizeTester:
             },
             {
                 "name": "Creative Writing",
-                "prompt": "Write a short poem about the beauty of code.",
+                "prompt": "Write a short poem about the beauty of extras.",
                 "category": "creative"
             },
             {

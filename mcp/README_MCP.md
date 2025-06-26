@@ -49,7 +49,7 @@ pip install rich asyncio requests
 ### Basic Usage
 
 ```bash
-cd code
+cd extras
 python mcp_demo.py
 ```
 

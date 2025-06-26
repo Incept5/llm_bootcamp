@@ -149,16 +149,16 @@ class MCPServer:
         # Code execution tool
         self.tools.append(MCPTool(
             name="execute_python",
-            description="Execute Python code and return results",
+            description="Execute Python extras and return results",
             input_schema={
                 "type": "object",
                 "properties": {
-                    "code": {
+                    "extras": {
                         "type": "string",
-                        "description": "Python code to execute"
+                        "description": "Python extras to execute"
                     }
                 },
-                "required": ["code"]
+                "required": ["extras"]
             }
         ))
         
@@ -271,7 +271,7 @@ class MCPServer:
                     "features": ["tools", "resources", "async_processing"]
                 }, indent=2)
             elif file_path.endswith(".py"):
-                content = "# Python code example\nprint('Hello from MCP!')\nresult = 42\n"
+                content = "# Python extras example\nprint('Hello from MCP!')\nresult = 42\n"
             else:
                 # Try to read actual file if it exists
                 if os.path.exists(file_path):
@@ -326,8 +326,8 @@ class MCPServer:
         }
     
     async def _tool_execute_python(self, args: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate Python code execution"""
-        code = args.get("code")
+        """Simulate Python extras execution"""
+        code = args.get("extras")
         
         # For safety, we'll simulate execution rather than actually executing
         # In a real implementation, this would use a sandboxed environment
@@ -344,7 +344,7 @@ class MCPServer:
         output = simulated_outputs.get(code.strip(), f"# Executed: {code}\n# Output: <simulated result>")
         
         return {
-            "code": code,
+            "extras": code,
             "output": output,
             "execution_time_ms": 123,
             "status": "success"
@@ -408,7 +408,7 @@ class MCPServer:
 ## Tools
 - `read_file`: Read file contents
 - `web_search`: Search the web
-- `execute_python`: Execute Python code
+- `execute_python`: Execute Python extras
 - `analyze_data`: Analyze datasets
 
 ## Resources
@@ -421,7 +421,7 @@ class MCPServer:
                 "examples": [
                     {"name": "Alice in Wonderland", "path": "demos/Alice_in_Wonderland.txt"},
                     {"name": "Grimm Fairy Tales", "path": "demos/Kinder-und-Hausmärchen-der-Gebrüder-Grimm.txt"},
-                    {"name": "Workshop Code", "path": "code/"}
+                    {"name": "Workshop Code", "path": "extras/"}
                 ]
             }, indent=2)
         else:
@@ -667,11 +667,11 @@ class MCPDemo:
             console.print(table)
         
         # Example 3: Code execution
-        console.print("\n[cyan]Example 3: Python code execution[/cyan]")
+        console.print("\n[cyan]Example 3: Python extras execution[/cyan]")
         result = await self.client.call_tool(
             "Workshop Tools Server",
             "execute_python",
-            {"code": "print('Hello from MCP!'); result = 2 + 2; print(f'2 + 2 = {result}')"}
+            {"extras": "print('Hello from MCP!'); result = 2 + 2; print(f'2 + 2 = {result}')"}
         )
         
         if "error" not in result:
@@ -753,7 +753,7 @@ print(f"- Strong correlations found: {len(analysis.get('strong_correlations', []
         exec_result = await self.client.call_tool(
             "Workshop Tools Server",
             "execute_python",
-            {"code": summary_code}
+            {"extras": summary_code}
         )
         
         console.print("🔄 Workflow completed:")
@@ -826,8 +826,8 @@ print(f"- Strong correlations found: {len(analysis.get('strong_correlations', []
                     })
                 
                 elif tool_name == "execute_python":
-                    code = Prompt.ask("Python code")
-                    result = await self.client.call_tool("Workshop Tools Server", tool_name, {"code": code})
+                    code = Prompt.ask("Python extras")
+                    result = await self.client.call_tool("Workshop Tools Server", tool_name, {"extras": code})
                 
                 elif tool_name == "analyze_data":
                     data_path = Prompt.ask("Data path")

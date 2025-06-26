@@ -49,11 +49,11 @@ def main():
         "The cat sat on the mat.",
         "What is the weather like today?",
         "Python is a popular programming language.",
-        "How do I write code?",
+        "How do I write extras?",
         "The quick brown fox jumps over the lazy dog.",
         "What's the best way to learn programming?",
         "Machine learning involves training models on data.",
-        "Can you help me debug this code?"
+        "Can you help me debug this extras?"
     ]
 
     while True:
