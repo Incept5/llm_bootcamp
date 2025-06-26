@@ -18,7 +18,7 @@ from collections import Counter
 
 def load_model():
     # Ollama model options (choose one based on available models):
-    model_name = "llama3.2:latest"  # Available on your system
+    model_name = "llama3.2:3b"  # Available on your system
     # model_name = "qwen2.5:3b"     # Available on your system  
     # model_name = "qwen3:0.6b"     # Small and fast, available on your system
     # model_name = "qwen3:1.7b"     # Balanced option, available on your system
