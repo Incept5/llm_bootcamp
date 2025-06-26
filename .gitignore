@@ -73,3 +73,6 @@ __pycache__/
 *.chromadb/
 /intro_to_llms/model_test_results*
 /tokens-in-llms/tokenization_comparison.png
+/tokens-in-llms/token_count_comparison.png
+/tokens-in-llms/tokenization_results.json
+/tokens-in-llms/tokenization_time_comparison.png

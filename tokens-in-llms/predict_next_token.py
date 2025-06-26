@@ -3,6 +3,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import re
 import matplotlib.pyplot as plt
+import threading
+import time
 
 # MODEL SELECTION GUIDE:
 # - Qwen2.5-7B-Instruct: Best balance of quality vs speed (recommended)
@@ -99,13 +101,37 @@ def replace_special_chars(text):
     pattern = '|'.join(map(re.escape, replacements.keys()))
     return re.sub(pattern, lambda m: replacements[m.group()], text)
 
-tokenizer, model = load_model()
+# Global variables for model and tokenizer
+tokenizer = None
+model = None
+model_loading = False
+model_loaded = False
+
+def load_model_async():
+    """Load model in background thread"""
+    global tokenizer, model, model_loading, model_loaded
+    model_loading = True
+    try:
+        tokenizer, model = load_model()
+        model_loaded = True
+        print("Model loaded successfully!")
+    except Exception as e:
+        print(f"Error loading model: {e}")
+    finally:
+        model_loading = False
 
 def predict_next_tokens(user_input, system_prompt, temperature, top_p, top_k, state):
     """
     Generates the next token probabilities based on the user input and system prompt.
     Keeps the system prompt separate from the user-visible input.
     """
+    global model, tokenizer, model_loaded, model_loading
+    
+    if not model_loaded:
+        if model_loading:
+            return user_input, "🤖 Model is still loading... Please wait a moment and try again.", None, state
+        else:
+            return user_input, "❌ Model failed to load. Please refresh the page to try again.", None, state
     # Combine system prompt with user input if system prompt is provided
     if system_prompt.strip():
         combined_input = f"{system_prompt}\n{user_input}"
@@ -135,6 +161,14 @@ def predict_next_tokens(user_input, system_prompt, temperature, top_p, top_k, st
     return user_input, result, fig, new_state
 
 def add_next_token(user_input, prediction_text, system_prompt, temperature, top_p, top_k, state):
+    global model, tokenizer, model_loaded, model_loading
+    
+    if not model_loaded:
+        if model_loading:
+            return user_input, "🤖 Model is still loading... Please wait a moment and try again.", None, state
+        else:
+            return user_input, "❌ Model failed to load. Please refresh the page to try again.", None, state
+    
     if not prediction_text:
         return user_input, "", None, state
 
@@ -186,9 +220,22 @@ def add_next_token(user_input, prediction_text, system_prompt, temperature, top_
 
     return updated_user_input, result, fig, new_state
 
+def get_model_status():
+    """Get current model loading status"""
+    global model_loaded, model_loading
+    if model_loaded:
+        return "✅ Model loaded and ready!"
+    elif model_loading:
+        return "🤖 Loading model... This may take a few minutes for larger models."
+    else:
+        return "❌ Model failed to load."
+
 with gr.Blocks(theme='default') as iface:
     gr.Markdown("# Next Token Predictor")
     gr.Markdown("Enter some text, and see the probabilities of the next tokens.")
+    
+    # Model status indicator
+    model_status = gr.Markdown("🤖 Loading model... This may take a few minutes for larger models.")
 
     with gr.Row():
         with gr.Column(scale=1):
@@ -226,6 +273,7 @@ with gr.Blocks(theme='default') as iface:
             with gr.Row():
                 submit_button = gr.Button("Submit")
                 next_button = gr.Button("Next")
+                refresh_status_button = gr.Button("Refresh Status", size="sm")
 
             # Hidden state to store the combined input
             hidden_state = gr.State(value="")
@@ -250,5 +298,14 @@ with gr.Blocks(theme='default') as iface:
         inputs=[input_text, output_text, system_prompt, temperature, top_p, top_k, hidden_state],
         outputs=[input_text, output_text, output_plot, hidden_state]
     )
+    refresh_status_button.click(
+        get_model_status,
+        outputs=[model_status]
+    )
 
+# Start model loading in background thread
+loading_thread = threading.Thread(target=load_model_async, daemon=True)
+loading_thread.start()
+
+# Launch the interface immediately
 iface.launch()
