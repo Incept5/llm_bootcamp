@@ -322,7 +322,7 @@ python demos/predict_next_token.py
 Find semantically similar sentences using embeddings.
 
 ```bash
-python demos/embedding_example.py
+python demos/simple_embedding_example.py
 ```
 
 **What it teaches:**
