@@ -11,6 +11,18 @@ These scripts serve as initial configuration tests to ensure:
 - Python environment can successfully communicate with both local and cloud APIs
 - Basic LLM functionality is working as expected
 
+## ⚠️ Important Note: Optional Advanced Scripts
+
+**The basic configuration test scripts (`local_llm_using_ollama.py` and `cloud_llm_using_groq.py`) are the only scripts required for this course.**
+
+The advanced model testing and comparison scripts (`model_comparison_test.py`, `model_size_test.py`, `streaming_performance_test.py`) are **optional extras** provided for:
+- Users who want to dive deeper into LLM performance characteristics
+- Understanding model trade-offs and selection criteria
+- Exploring advanced performance testing methodologies
+- Self-directed learning beyond the course requirements
+
+**You do not need to run the advanced scripts to complete the course successfully.** They are educational resources for those interested in expanding their understanding of LLM capabilities and performance analysis.
+
 ## Prerequisites
 
 Before running these scripts, ensure you have:
@@ -146,7 +158,9 @@ The scripts can be extended to support:
 - Google Gemini
 - Azure OpenAI
 
-## Advanced Test Scripts
+## Advanced Test Scripts (Optional - For Extended Learning)
+
+**Note: These scripts are not required for the course but are provided as educational resources for users who want to explore LLM performance analysis in greater depth.**
 
 ### `model_comparison_test.py`
 Comprehensive test suite that evaluates multiple models across different categories:

@@ -84,7 +84,7 @@ class ModelTester:
             # Cloud Models (Groq)
             ModelConfig("llama-3.3-70b-versatile", "groq", "large", "70B", 131072, "Groq Llama 3.3 70B - Fast cloud inference"),
             ModelConfig("llama-3.1-8b-instant", "groq", "medium", "8B", 131072, "Groq Llama 3.1 8B - Ultra-fast inference"),
-            ModelConfig("mixtral-8x7b-32768", "groq", "medium", "8x7B", 32768, "Groq Mixtral 8x7B - Efficient MoE"),
+            ModelConfig("mistral-saba-24b", "groq", "medium", "8x7B", 32768, "Groq mistral-saba-24b - Efficient MoE"),
             ModelConfig("gemma2-9b-it", "groq", "medium", "9B", 8192, "Groq Gemma 2 9B - Instruction tuned"),
         ]
 

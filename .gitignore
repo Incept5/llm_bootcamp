@@ -71,3 +71,4 @@ __pycache__/
 /city_payroll.db
 /.chromadb
 *.chromadb/
+/intro_to_llms/model_test_results*
