@@ -1,114 +1,55 @@
-# urllib3/LibreSSL compatibility issue resolved via requirements.txt: urllib3<2.0
 import gradio as gr
-import requests
-import json
+from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 import re
 import matplotlib.pyplot as plt
-import threading
-import time
-import numpy as np
-from collections import Counter
-
-# OLLAMA MODEL SELECTION GUIDE (smaller, faster models):
-# - llama3.2:1b: Fastest, 1B parameters (recommended for speed)
-# - phi3:mini: Good quality, 3.8B parameters  
-# - qwen2.5:1.5b: Balanced option, 1.5B parameters
-# - llama3.2:3b: Higher quality, 3B parameters
-# Make sure to run 'ollama pull <model>' first to download the model
 
 def load_model():
-    # Ollama model options (choose one based on available models):
-    model_name = "llama3.2:3b"  # Available on your system
-    # model_name = "qwen2.5:3b"     # Available on your system  
-    # model_name = "qwen3:0.6b"     # Small and fast, available on your system
-    # model_name = "qwen3:1.7b"     # Balanced option, available on your system
-    
-    print(f"Using Ollama model: {model_name}")
-    
-    try:
-        # Test connection to Ollama
-        response = requests.get("http://localhost:11434/api/tags")
-        if response.status_code != 200:
-            raise Exception("Ollama server not running. Please start Ollama first.")
-        
-        # Check if model is available
-        models = response.json().get('models', [])
-        model_names = [m['name'] for m in models]
-        
-        if model_name not in model_names:
-            print(f"Model {model_name} not found. Available models: {model_names}")
-            print(f"Please run: ollama pull {model_name}")
-            raise Exception(f"Model {model_name} not available")
-        
-        print(f"Model {model_name} is available and ready")
-        return model_name
-        
-    except Exception as e:
-        print(f"Error connecting to Ollama: {e}")
-        print("Make sure Ollama is running and the model is pulled")
-        raise e
+    torch.set_grad_enabled(False)
+    model_path = "Qwen/Qwen2-7B-Instruct"
+    # model_path = "meta-llama/Llama-3.2-3B"
+    tokenizer = AutoTokenizer.from_pretrained(model_path, use_safetensors=True)
+    model = AutoModelForCausalLM.from_pretrained(model_path, use_safetensors=True)
+    return tokenizer, model
 
-def get_next_token_probs(model_name, input_string, temperature=1.0, top_p=1.0, top_k=10):
-    """Get next token probabilities using Ollama API"""
-    try:
-        # Use Ollama's generate API to get multiple completions
-        completions = []
-        tokens = []
-        
-        # Generate multiple short completions to simulate token probabilities
-        for _ in range(max(20, top_k * 2)):
-            payload = {
-                "model": model_name,
-                "prompt": input_string,
-                "stream": False,
-                "options": {
-                    "temperature": temperature,
-                    "top_p": top_p,
-                    "top_k": top_k,
-                    "num_predict": 1,  # Generate only 1 token
-                    "stop": ["\n", " ", ".", ",", "!", "?"]  # Stop at common delimiters
-                }
-            }
-            
-            response = requests.post(
-                "http://localhost:11434/api/generate",
-                json=payload,
-                timeout=10
-            )
-            
-            if response.status_code == 200:
-                result = response.json()
-                next_text = result.get('response', '').strip()
-                if next_text:
-                    # Extract first token/character
-                    first_token = next_text.split()[0] if next_text.split() else next_text[:1]
-                    if first_token:
-                        tokens.append(first_token)
-        
-        # Count token frequencies to simulate probabilities
-        if not tokens:
-            # Fallback tokens if no responses
-            tokens = [" ", "the", "and", "a", "to", "of", "in", "I", "you", "it"]
-            token_counts = Counter({token: 1 for token in tokens})
-        else:
-            token_counts = Counter(tokens)
-        
-        # Get top_k most common tokens
-        most_common = token_counts.most_common(top_k)
-        
-        # Convert counts to probabilities
-        total_count = sum(count for _, count in most_common)
-        probs = [count / total_count for _, count in most_common]
-        texts = [token for token, _ in most_common]
-        
-        return np.array(probs), texts
-        
-    except Exception as e:
-        print(f"Error getting token probabilities: {e}")
-        # Return fallback probabilities
-        fallback_tokens = [" ", "the", "and", "a", "to", "of", "in", "I", "you", "it"]
-        fallback_probs = np.array([0.2, 0.15, 0.12, 0.1, 0.08, 0.08, 0.07, 0.07, 0.07, 0.06])
-        return fallback_probs, fallback_tokens
+def get_next_token_probs(model, tokenizer, input_string, temperature=1.0, top_p=1.0, top_k=10):
+    input_ids = tokenizer.encode(input_string, return_tensors="pt")
+    with torch.no_grad():
+        outputs = model(input_ids)
+    logits = outputs.logits[-1, -1]  # Get logits for the last token
+
+    # Apply temperature
+    logits = logits / temperature
+
+    # Compute softmax probabilities
+    probs = torch.nn.functional.softmax(logits, dim=-1)
+
+    # Apply top_k
+    if top_k > 0:
+        probs, ids = torch.topk(probs, top_k)
+    else:
+        ids = torch.arange(len(probs))
+
+    # Apply top_p (nucleus sampling)
+    if top_p < 1.0:
+        sorted_probs, sorted_indices = torch.sort(probs, descending=True)
+        cumulative_probs = torch.cumsum(sorted_probs, dim=-1)
+        mask = cumulative_probs <= top_p
+        sorted_probs = sorted_probs[mask]
+        # Use sorted_indices to get the correct token ids after filtering
+        sorted_token_ids = ids[sorted_indices][mask]
+        probs = sorted_probs
+        ids = sorted_token_ids
+
+    # Normalize probabilities after filtering
+    if probs.sum() > 0:
+        probs = probs / probs.sum()
+    else:
+        probs = torch.ones_like(probs) / len(probs)
+
+    texts = tokenizer.convert_ids_to_tokens(ids)
+
+    return probs, texts
 
 def replace_special_chars(text):
     replacements = {
@@ -118,51 +59,27 @@ def replace_special_chars(text):
     pattern = '|'.join(map(re.escape, replacements.keys()))
     return re.sub(pattern, lambda m: replacements[m.group()], text)
 
-# Global variables for model
-model_name = None
-model_loading = False
-model_loaded = False
-
-def load_model_async():
-    """Load model in background thread"""
-    global model_name, model_loading, model_loaded
-    model_loading = True
-    try:
-        model_name = load_model()
-        model_loaded = True
-        print("Model loaded successfully!")
-    except Exception as e:
-        print(f"Error loading model: {e}")
-    finally:
-        model_loading = False
+tokenizer, model = load_model()
 
 def predict_next_tokens(user_input, system_prompt, temperature, top_p, top_k, state):
     """
     Generates the next token probabilities based on the user input and system prompt.
     Keeps the system prompt separate from the user-visible input.
     """
-    global model_name, model_loaded, model_loading
-    
-    if not model_loaded:
-        if model_loading:
-            return user_input, "🤖 Model is still loading... Please wait a moment and try again.", None, state
-        else:
-            return user_input, "❌ Model failed to load. Please refresh the page to try again.", None, state
-    
     # Combine system prompt with user input if system prompt is provided
     if system_prompt.strip():
         combined_input = f"{system_prompt}\n{user_input}"
     else:
         combined_input = user_input
 
-    probs, texts = get_next_token_probs(model_name, combined_input, temperature, top_p, top_k)
+    probs, texts = get_next_token_probs(model, tokenizer, combined_input, temperature, top_p, top_k)
 
     result = ""
     for prob, text in zip(probs, texts):
         cleaned_text = replace_special_chars(text)
         if cleaned_text == '<CR>':
             cleaned_text = '\\n'  # Display "\n" in the output
-        percentage = prob * 100
+        percentage = prob.item() * 100
         result += f"{percentage:.2f}% : \"{cleaned_text}\"\n"
 
     # Create pie chart
@@ -178,14 +95,6 @@ def predict_next_tokens(user_input, system_prompt, temperature, top_p, top_k, st
     return user_input, result, fig, new_state
 
 def add_next_token(user_input, prediction_text, system_prompt, temperature, top_p, top_k, state):
-    global model_name, model_loaded, model_loading
-    
-    if not model_loaded:
-        if model_loading:
-            return user_input, "🤖 Model is still loading... Please wait a moment and try again.", None, state
-        else:
-            return user_input, "❌ Model failed to load. Please refresh the page to try again.", None, state
-    
     if not prediction_text:
         return user_input, "", None, state
 
@@ -216,14 +125,14 @@ def add_next_token(user_input, prediction_text, system_prompt, temperature, top_
         new_combined_input = updated_user_input
 
     # Get next token probabilities
-    probs, texts = get_next_token_probs(model_name, new_combined_input, temperature, top_p, top_k)
+    probs, texts = get_next_token_probs(model, tokenizer, new_combined_input, temperature, top_p, top_k)
 
     result = ""
     for prob, text in zip(probs, texts):
         cleaned_text = replace_special_chars(text)
         if cleaned_text == '<CR>':
             cleaned_text = '\\n'  # Display "\n" in the output
-        percentage = prob * 100
+        percentage = prob.item() * 100
         result += f"{percentage:.2f}% : \"{cleaned_text}\"\n"
 
     # Create pie chart
@@ -237,23 +146,9 @@ def add_next_token(user_input, prediction_text, system_prompt, temperature, top_
 
     return updated_user_input, result, fig, new_state
 
-def get_model_status():
-    """Get current model loading status"""
-    global model_loaded, model_loading
-    if model_loaded:
-        return "✅ Model loaded and ready!"
-    elif model_loading:
-        return "🤖 Loading model... This may take a few minutes for larger models."
-    else:
-        return "❌ Model failed to load."
-
 with gr.Blocks(theme='default') as iface:
-    gr.Markdown("# Next Token Predictor (Ollama)")
+    gr.Markdown("# Next Token Predictor")
     gr.Markdown("Enter some text, and see the probabilities of the next tokens.")
-    gr.Markdown("**Requirements:** Make sure Ollama is running and you have pulled a model (e.g., `ollama pull llama3.2:1b`)")
-    
-    # Model status indicator
-    model_status = gr.Markdown("🤖 Loading model... This may take a few minutes for larger models.")
 
     with gr.Row():
         with gr.Column(scale=1):
@@ -291,7 +186,6 @@ with gr.Blocks(theme='default') as iface:
             with gr.Row():
                 submit_button = gr.Button("Submit")
                 next_button = gr.Button("Next")
-                refresh_status_button = gr.Button("Refresh Status", size="sm")
 
             # Hidden state to store the combined input
             hidden_state = gr.State(value="")
@@ -316,14 +210,5 @@ with gr.Blocks(theme='default') as iface:
         inputs=[input_text, output_text, system_prompt, temperature, top_p, top_k, hidden_state],
         outputs=[input_text, output_text, output_plot, hidden_state]
     )
-    refresh_status_button.click(
-        get_model_status,
-        outputs=[model_status]
-    )
 
-# Start model loading in background thread
-loading_thread = threading.Thread(target=load_model_async, daemon=True)
-loading_thread.start()
-
-# Launch the interface immediately
 iface.launch()
