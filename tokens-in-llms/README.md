@@ -145,14 +145,14 @@ Most current LLMs use subword tokenization methods:
   ```
 - **Learning**: Production tokenization analysis, model selection
 
-#### 7. `predict_next_token.py`
+#### 7. `token_probs.py`
 **Purpose**: Interactive token prediction with probabilities
 - Real-time next-token probability distribution
 - Interactive Gradio interface
 - Temperature, top-p, top-k parameter exploration
 - Visual probability analysis with pie charts
 - System prompt and context handling
-- **Run**: `python predict_next_token.py`
+- **Run**: `python token_probs.py`
 - **Features**:
   - Adjustable sampling parameters
   - Step-by-step token generation
@@ -175,7 +175,7 @@ pip install transformers torch tiktoken sentencepiece matplotlib pandas gradio t
 4. **Visual Learning**: Run `llm-tokenization-demo.py` for comprehensive comparison
 5. **Hands-on Training**: Experiment with `sentencepiece_demo.py`
 6. **Advanced Analysis**: Use `tokenization_comparison.py` for production scenarios
-7. **Interactive Exploration**: Launch `predict_next_token.py` for real-time experiments
+7. **Interactive Exploration**: Launch `token_probs.py` for real-time experiments
 
 ### Quick Start Examples
 
@@ -196,7 +196,7 @@ python sentencepiece_demo.py --train --vocab-size 500
 python tokenization_comparison.py --category "GPT Family (BPE)"
 
 # Interactive token prediction
-python predict_next_token.py
+python token_probs.py
 ```
 
 ## Key Concepts Demonstrated
