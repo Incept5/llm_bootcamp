@@ -1,9 +1,29 @@
 import numpy as np
 from tabulate import tabulate
 import requests
-import sys
 import time
 
+############################################################################
+#
+# Some models to try with this, remember to use "ollama pull model" first
+#
+# hf.co/Qwen/Qwen3-Embedding-4B-GGUF
+# hf.co/Qwen/Qwen3-Embedding-0.6B-GGUF
+# granite-embedding
+# bge-large
+# nomic-embed-text
+# snowflake-arctic-embed
+# mxbai-embed-large
+# bge-m3
+# snowflake-arctic-embed2
+# granite-embedding
+#
+# Many of the models are quantised or have alternative sizes e.g.
+# all-minilm:33m-l12-v2-fp16
+# all-minilm:22m-l12-v2-fp16
+# all-minilm (defaults to 22m above)
+#
+############################################################################
 
 def get_available_ollama_models():
     """
@@ -16,7 +36,7 @@ def get_available_ollama_models():
         response = requests.get("http://localhost:11434/api/tags")
         response.raise_for_status()
         models_data = response.json()
-        return [model['name'].split(':')[0] for model in models_data.get('models', [])]
+        return [model['name'] for model in models_data.get('models', [])]
     except requests.exceptions.ConnectionError:
         print("Error: Could not connect to Ollama server.")
         print("Make sure Ollama is running on http://localhost:11434")
@@ -406,4 +426,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print("\nTip: Install embedding models with 'ollama pull all-minilm' or 'ollama pull nomic-embed-text'")
+    print("\nTip: Install embedding models with 'ollama pull all-minilm' or 'ollama pull nomic-embed-text' (see code)")
